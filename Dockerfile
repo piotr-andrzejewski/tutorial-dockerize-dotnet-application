@@ -36,7 +36,12 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
 # runtime dependencies for the application. This often uses a different base
 # image from the build stage where the necessary files are copied from the build
 # stage.
-#
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS development
+COPY . /source
+WORKDIR /source/docker-dotnet-sample/src
+CMD dotnet run --no-launch-profile
+
 # The example below uses an aspnet alpine image as the foundation for running the app.
 # It will also use whatever happens to be the most recent version of that tag when you
 # build your Dockerfile. If reproducibility is important, consider using a more specific
